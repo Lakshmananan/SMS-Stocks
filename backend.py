@@ -4,9 +4,28 @@ Created on Wed Jun  3 11:31:49 2020
 
 @author: laksh
 """
+import tweepy
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from twilio.twiml.messaging_response import MessagingResponse
+import config
+
+def elon():
+    auth = tweepy.OAuthHandler(config.ckey, config.csecret)
+    auth.set_access_token(config.atoken, config.asecret)
+    api = tweepy.API(auth)
+    stuff = api.user_timeline(user_id = '44196397', count = 10, include_rts = False)
+    
+    resp = MessagingResponse()
+    tweets = []
+    for item in stuff:
+        tweets.append(item._json['text'])
+    msg = ''
+    for i in range(len(tweets)):
+        msg += tweets[i]
+        msg += ' \n  \n '
+    resp.message(msg) 
+    return str(resp)
 
 def helper():
     return 'Working on it...'

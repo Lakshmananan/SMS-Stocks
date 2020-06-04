@@ -6,7 +6,7 @@ Created on Wed Jun  3 12:41:42 2020
 """
 
 from flask import Flask, request
-from backend import *
+from backend import elon, ticker_overview
 
 app = Flask(__name__)
 
@@ -19,6 +19,8 @@ def parsing():
     
     if action == 'quote':
         return ticker_overview(ticker)
+    if action == 'tweets':
+        return elon()
 
 if __name__ == "__main__":
     app.run(debug=True)
